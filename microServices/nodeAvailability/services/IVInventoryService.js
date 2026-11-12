@@ -32,9 +32,9 @@ const buildInventoryUrlBroker = (centroid, skus = []) => {
   if (!BROKER) {
     baseUrl = baseUrl.replace("{tenantId}", process.env.OMS_TENANT_ID);
     return `${baseUrl}`;
-  } else {
-    return `${baseUrl}${queryParams}`;
   }
+
+  return `${baseUrl}${queryParams}`;
 };
 
 /**
@@ -57,23 +57,24 @@ const requestInventoryAvailability = async (centroid, skus, token) => {
     Accept: "application/json",
   };
 
+  const skuList = skus.map((sku, index) => (
+        {
+            lineId: `${index + 1}`,
+            itemId: String(sku).trim(),
+            unitOfMeasure: "UN",
+            productClass: "",
+            deliveryMethod: "PICK",
+            shipNodes: [
+                String(centroid).trim(),
+            ],
+        }
+   ));
+
   const body = {
-    "considerSafetyStock": true,
-    "considerFulfillmentOptions": true,
-    "lines": [
-      {
-        "lineId": "1",
-        "itemId": "Liv_SL_Item001",
-        "unitOfMeasure": "UN",
-        "productClass": "",
-        "deliveryMethod": "PICK",
-        "shipNodes": [
-          "28",
-          "0830-BT"
-        ]
-      }
-    ]
-  }
+    considerSafetyStock: true,
+    considerFulfillmentOptions: true,
+    lines: skuList,
+  };
 
   try {
     const response = await axios.post(url, body, {
@@ -85,15 +86,15 @@ const requestInventoryAvailability = async (centroid, skus, token) => {
     let rawResults = [];
     if (!BROKER) {
       rawResults = response.data?.lines || [];
-      let results = [];
+      const results = [];
       rawResults.forEach((item) => {
         item.shipNodeAvailabilities.forEach((shipNodeAvailability) => {
           results.push({
-            "key": item.lineId,
-            "skuId": item.itemId,
-            "centroId": shipNodeAvailability.shipNode,
-            "availableQuantity": shipNodeAvailability.currentAvailability?.availableQuantity,
-            "time": shipNodeAvailability.currentAvailability?.toTs
+            key: item.lineId,
+            skuId: item.itemId,
+            centroId: shipNodeAvailability.shipNode,
+            availableQuantity: shipNodeAvailability.currentAvailability?.availableQuantity,
+            time: shipNodeAvailability.currentAvailability?.toTs
           })
         })
       });
