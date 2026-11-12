@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ordenventa-service
+  annotations:
+    cloud.google.com/backend-config: '{"default": "http-hc-microservicio-ordenventa-config"}'
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  type: ClusterIP
+  selector:
+    app: mdr-ingesta
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 4001

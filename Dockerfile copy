@@ -1,0 +1,28 @@
+FROM node:19
+
+WORKDIR  /usr/src/app
+
+COPY . .
+
+RUN npm install
+
+# ENTRYPOINT node server.js
+
+ENTRYPOINT npm run dev
+
+EXPOSE 4001
+
+############################
+FROM node:14-alpine
+
+WORKDIR /usr/src/app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci --quiet --only=production
+
+COPY . .
+
+EXPOSE 4001
+
+CMD ["npm", "run", "dev"]

@@ -1,0 +1,13 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: http-hc-microservicio-ordenventa-config
+spec:
+  healthCheck:
+    checkIntervalSec: 50
+    timeoutSec: 30
+    healthyThreshold: 2
+    unhealthyThreshold: 2
+    type: HTTP
+    requestPath: /apivisor/health
+    port: 4001

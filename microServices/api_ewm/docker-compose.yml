@@ -1,0 +1,28 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: apl_oms22
+      POSTGRES_USER: apl_oms
+      POSTGRES_DB: omswebdev
+    ports:
+      - "5432:5432"
+    volumes:
+      - my_dbdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@sitio.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+
+volumes:
+  my_dbdata:

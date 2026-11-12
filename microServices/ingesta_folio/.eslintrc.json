@@ -1,0 +1,22 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": ["airbnb"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "plugins": ["react"],
+  "ignorePatterns": ["eslint_report.js"],
+  "rules": {
+    "linebreak-style": "off",
+    "camelcase": "off",
+    "import/no-named-as-default": 0,
+    "semi": ["warn", "always"],
+    "quotes": ["warn", "double"],
+    "indent": "off"
+  }
+}

@@ -1,0 +1,83 @@
+const Sequelize = require('sequelize');
+
+class Simpliroute extends Sequelize.Model {
+    static init(sequelize, DataTypes) {
+        return super.init(
+            {
+                id: {
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true,
+                },
+                status: DataTypes.STRING(50),
+                status_changed: DataTypes.STRING(50),
+                "order": DataTypes.STRING(50),
+                tracking_id: DataTypes.STRING(50),
+                title: DataTypes.STRING(50),
+                address: DataTypes.STRING(100),
+                latitude: DataTypes.STRING(50),
+                longitude: DataTypes.STRING(50),
+                "load": DataTypes.STRING(30),
+                load_2: DataTypes.STRING(30),
+                load_3: DataTypes.STRING(30),
+                window_start: DataTypes.STRING(30),
+                window_end: DataTypes.STRING(30),
+                window_start_2: DataTypes.STRING(30),
+                window_end_2: DataTypes.STRING(30),
+                duration: DataTypes.STRING(30),
+                contact_name: DataTypes.STRING(50),
+                contact_phone: DataTypes.STRING(20),
+                contact_email: DataTypes.STRING(30),
+                reference: DataTypes.STRING(30),
+                notes: DataTypes.STRING(254),
+                planned_date: DataTypes.STRING(50),
+                programmed_date: DataTypes.STRING(50),
+                estimated_time_arrival: DataTypes.STRING(50),
+                estimated_time_departure: DataTypes.STRING(50),
+                checkin_time: DataTypes.STRING(50),
+                checkin_latitude: DataTypes.STRING(50),
+                checkin_longitude: DataTypes.STRING(50),
+                checkout_comment: DataTypes.STRING(254),
+                checkout_observation: DataTypes.STRING(254),
+                checkout_user_id: DataTypes.STRING(50),
+                checkout_time: DataTypes.STRING(50),
+                on_its_way: DataTypes.STRING(50),
+                calculated_service_time: DataTypes.STRING(50),
+                current_eta: DataTypes.STRING(50),
+                signature: DataTypes.STRING(254),
+                priority_level: DataTypes.STRING(30),
+                geocode_alert: DataTypes.STRING(30),
+                visit_type: DataTypes.STRING(30),
+                postal_code: DataTypes.STRING(20),
+                fleet: DataTypes.STRING(30),
+                pictures: DataTypes.ARRAY(DataTypes.TEXT),
+                observation: DataTypes.JSON,
+                account: DataTypes.JSON,
+                route: DataTypes.JSON,
+                extra_field_values: DataTypes.JSON,
+                plan: DataTypes.JSON,
+                create_time: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+                },
+                update_time: DataTypes.DATE,
+            },
+            {
+                sequelize,
+                tableName: 'simpliroute',
+                schema: 'cnpao',
+                timestamps: false,
+                indexes: [
+                    {
+                        name: 'simpliroute_pkey',
+                        unique: true,
+                        fields: [{ name: 'id' }],
+                    },
+                ],
+            },
+        );
+    }
+}
+
+module.exports = (sequelize, DataTypes) => Simpliroute.init(sequelize, DataTypes);

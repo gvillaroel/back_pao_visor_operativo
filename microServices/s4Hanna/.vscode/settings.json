@@ -1,0 +1,12 @@
+{
+    "jest.rootPath": "/",
+    "cx.server": {
+        "url": "https://epl.checkmarx.net/",
+        "alias": "Checkmarx-Backend-PAO",
+        "username": "",
+        "password": "",
+        "project_id": 236,
+        "team_id": 34,
+        "project_name": "BACKEND_PAO5"
+    }
+}
